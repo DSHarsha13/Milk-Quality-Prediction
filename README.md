@@ -24,5 +24,5 @@ Random Forest accuracy: ~100% (best performing)
 ## Future Scope
 * Integrate with IoT sensors for real-time monitoring<br>
 * Deploy as a web or mobile app<br>
-*Extend dataset with bacterial counts & nutrient levels<br>
-*Use Deep Learning for more robust predictions<br>
+* Extend dataset with bacterial counts & nutrient levels<br>
+* Use Deep Learning for more robust predictions<br>
