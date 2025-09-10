@@ -1,0 +1,94 @@
+1. Loading Data:
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+import seaborn as sns
+
+#Loading the data
+df = pd.read_csv('milknew.csv') 
+df.head()
+
+2. Familiarizing with Data:
+#Checking the shape of the dataset
+df.shape
+
+#Information about the dataset
+df.info()
+df.describe()
+df['Grade'].value_counts()
+df['Grade'].unique()
+df['Grade'] = df['Grade'].map({'high':2, 'medium':1, 'low':0})
+df.head()
+
+#checking the data for null or missing values
+df.isnull().sum()
+
+3. Visualizing the data:
+correllations = df.corr()
+plt.figure(figsize=(10,10))
+g = sns.heatmap(correllations, annot=True, cmap='RdYlGn')
+
+#Plotting the data distribution
+df.hist(bins = 10, figsize = (30,30), color='blue')
+
+sns.countplot(data=df, x='Grade')
+
+g = sns.catplot(data=df, x='Temprature', y='Grade', kind='strip')
+
+sns.regplot(data=df, x="Temprature", y="pH")
+
+sns.scatterplot(x="Temprature", y="Colour", data=df);
+
+df.rename(columns={'Fat ':'Fat'}, inplace=True)
+
+4. Machine Learning Models & Training:
+#Logistic Regression
+X = df.iloc[:, :-1]
+y = df.iloc[:, -1]
+
+def create_dataset(X_data, y_data):
+    X_train, X_test, y_train, y_test = train_test_split(X_data, y_data)
+    sc = MinMaxScaler()
+    X_train = sc.fit_transform(X_train)
+    X_test = sc.transform(X_test)
+    return X_train, X_test, y_train, y_test
+X_train, X_test, y_train, y_test = create_dataset(X, y)
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+
+acc_vec = []
+c_vec = np.arange(0.1,10,0.1)
+
+for i in c_vec:
+    model = LogisticRegression(C=i)
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+    acc_vec.append(accuracy_score(y_test, y_pred))
+
+fig, axs = plt.subplots()
+axs.set_xlabel('C')
+axs.set_ylabel('accuracy rate')
+axs.plot(c_vec, acc_vec)
+
+model.coef_ # 3 vectors since we have 3 classes
+
+#Random Forest
+from sklearn.ensemble import RandomForestClassifier
+acc_vec_RF = []
+depth_vec = np.arange(1, 20, 1)
+for d in depth_vec:
+    clf = RandomForestClassifier(max_depth=d, random_state=0)
+    clf.fit(X_train, y_train)
+    y_pred_RF = clf.predict(X_test)
+    acc_vec_RF.append(accuracy_score(y_test, y_pred_RF))
+
+fig, axs = plt.subplots()
+axs.set_xlabel('max-depth')
+axs.set_ylabel('accuracy rate')
+axs.plot(depth_vec, acc_vec_RF)
+
+max(acc_vec_RF)
