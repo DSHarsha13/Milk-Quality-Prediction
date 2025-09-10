@@ -6,7 +6,7 @@ It uses a dataset containing physical and chemical parameters of milk (pH, tempe
 ---
 
 ## 📂 Project Structure
-milk-quality-prediction/
+milk-quality-prediction/<br>
 ├── data/milknew.csv # Dataset
 ├── notebooks/milk_quality.ipynb # Jupyter Notebook (code + results)
 ├── src/milk_quality.py # Python script
