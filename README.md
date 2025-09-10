@@ -1,2 +1,8 @@
-# Milk-Quality-Prediction
-Milk quality prediction using machine learning is a process that uses algorithms to analyze a set of observable characteristics, such as pH, temperature, and turbidity, to classify milk into quality grades like low, medium, or high. 
+# 🥛 Milk Quality Prediction
+
+This project predicts the **quality of milk** (High, Medium, Low) using **Machine Learning models** (Logistic Regression & Random Forest).  
+It uses a dataset containing physical and chemical parameters of milk (pH, temperature, taste, odor, fat, turbidity, color).
+
+---
+
+## 📂 Project Structure
